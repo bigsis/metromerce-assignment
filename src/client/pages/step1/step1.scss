@@ -1,0 +1,17 @@
+.step1-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  .formatter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .input {
+      flex-grow: 1;
+    }
+
+    .output {
+      flex-grow: 1;
+    }
+  }
+}
