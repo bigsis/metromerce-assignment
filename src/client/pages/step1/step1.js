@@ -8,11 +8,46 @@ export default class Step1 extends Component {
     this.state = { input: '' };
 
     this.onJsonInputChange = this.onJsonInputChange.bind(this);
+    this.onSubmitFormat = this.onSubmitFormat.bind(this);
+    this.formatJson = this.formatJson.bind(this);
   }
 
   onJsonInputChange(event) {
     const jsonInput = event.currentTarget.value;
     this.setState({ input: jsonInput });
+  }
+
+  onSubmitFormat(event) {
+    event.preventDefault();
+    this.formatJson();
+  }
+
+  formatJson() {
+    const formatter = JSON.parse(this.state.input);
+    const map = {};
+    let node;
+    const roots = [];
+    const temp = [];
+    for (const i in formatter) {
+      for (const j in formatter[i]) {
+        temp.push(formatter[i][j]);
+      }
+    }
+
+    for (const i in temp) {
+      map[temp[i].id] = i;
+      temp[i].children = [];
+    }
+    for (const i in temp) {
+      node = temp[i];
+      if (node.parent_id !== '0' && node.parent_id !== null) {
+        temp[map[node.parent_id]].children.push(node);
+      } else {
+        roots.push(node);
+      }
+    }
+
+    this.setState({ output: JSON.stringify(roots, undefined, 4) });
   }
 
   render() {
@@ -30,10 +65,15 @@ export default class Step1 extends Component {
           </section>
           <section className="output">
             <Label for="exampleText">Output</Label>
-            <Input type="textarea" id="exampleText" disabled />
+            <Input
+              type="textarea"
+              id="exampleText"
+              disabled
+              value={this.state.output}
+            />
           </section>
         </div>
-        <Button>Submit</Button>
+        <Button onClick={this.onSubmitFormat}>Submit</Button>
       </div>
     );
   }
