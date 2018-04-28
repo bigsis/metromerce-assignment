@@ -12,9 +12,9 @@ export default class Step1 extends Component {
     this.formatJson = this.formatJson.bind(this);
   }
 
-  componentDidMount() {
-    // document.querySelector('#inputText').autoResize();
-    // document.querySelector('#outputText').autoResize();
+  onSubmitFormat() {
+    this.formatJson();
+    this.textAreaResize('outputText');
   }
 
   onJsonInputChange(event) {
@@ -22,11 +22,6 @@ export default class Step1 extends Component {
 
     this.setState({ input: jsonInput });
     this.textAreaResize('inputText');
-  }
-
-  onSubmitFormat(event) {
-    event.preventDefault();
-    this.formatJson();
   }
 
   textAreaResize(id) {
@@ -38,6 +33,7 @@ export default class Step1 extends Component {
       counter = textareaRows.length;
     } else if (textareaRows.length >= maxHeight) counter = maxHeight;
     else counter = 1;
+    if (counter < 25) counter = 25;
     textarea.rows = counter;
   }
 
@@ -65,9 +61,8 @@ export default class Step1 extends Component {
         roots.push(node);
       }
     }
-
-    this.setState({ output: JSON.stringify(roots, undefined, 4) });
-    this.textAreaResize('outputText');
+    const out = JSON.stringify(roots, undefined, 4);
+    this.setState({ output: out });
   }
 
   render() {
@@ -89,7 +84,6 @@ export default class Step1 extends Component {
             <Input
               type="textarea"
               id="outputText"
-              disabled
               rows="25"
               value={this.state.output}
             />
