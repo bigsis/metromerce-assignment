@@ -38,19 +38,21 @@ export default class Step2 extends Component {
     const end = this.state.page * 10;
     const start = end - 9;
     for (let i = start; i <= end; i++) {
-      row.push(<tr className="repo-row" active={i === this.state.page} key={i}>
-          <th scope="row">{i}</th>
-          <td>{this.state.repos[i].id}</td>
-          <td>
-            <img src={this.state.repos[i].owner.avatar_url} />
-          </td>
-          <td>{this.state.repos[i].owner.login}</td>
-          <td>{this.state.repos[i].name}</td>
-          <td>{this.state.repos[i].description}</td>
-          <td>
-            <a href="{this.state.repos[i].url}">{this.state.repos[i].url}</a>
-          </td>
-        </tr>);
+      if (this.state.repos[i] !== undefined) {
+        row.push(<tr className="repo-row" active={i === this.state.page} key={i}>
+            <th scope="row">{i}</th>
+            <td>{this.state.repos[i].id}</td>
+            <td>
+              <img src={this.state.repos[i].owner.avatar_url} />
+            </td>
+            <td>{this.state.repos[i].owner.login}</td>
+            <td>{this.state.repos[i].name}</td>
+            <td>{this.state.repos[i].description}</td>
+            <td>
+              <a href="{this.state.repos[i].url}">{this.state.repos[i].url}</a>
+            </td>
+          </tr>);
+      }
     }
     return row;
   }
