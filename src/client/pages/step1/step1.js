@@ -5,7 +5,14 @@ import './step1.scss';
 export default class Step1 extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { input: '' };
+
+    this.onJsonInputChange = this.onJsonInputChange.bind(this);
+  }
+
+  onJsonInputChange(event) {
+    const jsonInput = event.currentTarget.value;
+    this.setState({ input: jsonInput });
   }
 
   render() {
@@ -14,11 +21,16 @@ export default class Step1 extends Component {
         <div className="formatter">
           <section className="input">
             <Label for="exampleText">Input</Label>
-            <Input type="textarea" id="exampleText" />
+            <Input
+              type="textarea"
+              id="exampleText"
+              value={this.state.input}
+              onChange={this.onJsonInputChange}
+            />
           </section>
           <section className="output">
             <Label for="exampleText">Output</Label>
-            <Input type="textarea" id="exampleText" />
+            <Input type="textarea" id="exampleText" disabled />
           </section>
         </div>
         <Button>Submit</Button>
