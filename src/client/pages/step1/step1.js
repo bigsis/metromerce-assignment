@@ -12,14 +12,33 @@ export default class Step1 extends Component {
     this.formatJson = this.formatJson.bind(this);
   }
 
+  componentDidMount() {
+    // document.querySelector('#inputText').autoResize();
+    // document.querySelector('#outputText').autoResize();
+  }
+
   onJsonInputChange(event) {
     const jsonInput = event.currentTarget.value;
+
     this.setState({ input: jsonInput });
+    this.textAreaResize('inputText');
   }
 
   onSubmitFormat(event) {
     event.preventDefault();
     this.formatJson();
+  }
+
+  textAreaResize(id) {
+    const textarea = document.getElementById(id);
+    const textareaRows = textarea.value.split('\n');
+    const maxHeight = 100;
+    let counter = 0;
+    if (textareaRows[0] !== 'undefined' && textareaRows.length < maxHeight) {
+      counter = textareaRows.length;
+    } else if (textareaRows.length >= maxHeight) counter = maxHeight;
+    else counter = 1;
+    textarea.rows = counter;
   }
 
   formatJson() {
@@ -48,6 +67,7 @@ export default class Step1 extends Component {
     }
 
     this.setState({ output: JSON.stringify(roots, undefined, 4) });
+    this.textAreaResize('outputText');
   }
 
   render() {
@@ -58,8 +78,9 @@ export default class Step1 extends Component {
             <Label for="exampleText">Input</Label>
             <Input
               type="textarea"
-              id="exampleText"
+              id="inputText"
               value={this.state.input}
+              rows="25"
               onChange={this.onJsonInputChange}
             />
           </section>
@@ -67,8 +88,9 @@ export default class Step1 extends Component {
             <Label for="exampleText">Output</Label>
             <Input
               type="textarea"
-              id="exampleText"
+              id="outputText"
               disabled
+              rows="25"
               value={this.state.output}
             />
           </section>
