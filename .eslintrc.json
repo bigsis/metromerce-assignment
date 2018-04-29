@@ -7,6 +7,11 @@
   "rules": {
     "no-console": "off",
     "comma-dangle": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "class-methods-use-this": "off",
+    "guard-for-in": "off",
+    "no-restricted-syntax": "off",
+    "no-undef": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }
