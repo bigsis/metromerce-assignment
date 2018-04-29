@@ -26,7 +26,12 @@ export default class Step2 extends Component {
     const pagination = [];
     for (let i = 1; i <= 10; i++) {
       pagination.push(<PaginationItem active={i === this.state.page} key={i}>
-          <PaginationLink onClick={this.onSelectPage}>{i}</PaginationLink>
+          <PaginationLink
+            id={`pagination-link-${i}`}
+            onClick={this.onSelectPage}
+          >
+            {i}
+          </PaginationLink>
         </PaginationItem>);
     }
 
