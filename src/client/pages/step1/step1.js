@@ -5,16 +5,16 @@ import './step1.scss';
 export default class Step1 extends Component {
   constructor(props) {
     super(props);
-    this.state = { input: '' };
+    this.state = { input: '', output: '' };
 
     this.onJsonInputChange = this.onJsonInputChange.bind(this);
     this.onSubmitFormat = this.onSubmitFormat.bind(this);
     this.formatJson = this.formatJson.bind(this);
+    this.textAreaResize = this.textAreaResize.bind(this);
   }
 
   onSubmitFormat() {
     this.formatJson();
-    this.textAreaResize('outputText');
   }
 
   onJsonInputChange(event) {
@@ -26,6 +26,7 @@ export default class Step1 extends Component {
 
   textAreaResize(id) {
     const textarea = document.getElementById(id);
+    if (textarea === null) return;
     const textareaRows = textarea.value.split('\n');
     const maxHeight = 100;
     let counter = 0;
@@ -62,7 +63,9 @@ export default class Step1 extends Component {
       }
     }
     const out = JSON.stringify(roots, undefined, 4);
-    this.setState({ output: out });
+    this.setState({ output: out }, () => {
+      this.textAreaResize('outputText');
+    });
   }
 
   render() {
