@@ -54,7 +54,9 @@ export default class Step2 extends Component {
             <td>{this.state.repos[i].name}</td>
             <td>{this.state.repos[i].description}</td>
             <td>
-              <a href="{this.state.repos[i].url}">{this.state.repos[i].url}</a>
+              <a href={this.state.repos[i].html_url}>
+                {this.state.repos[i].url}
+              </a>
             </td>
           </tr>);
       }
